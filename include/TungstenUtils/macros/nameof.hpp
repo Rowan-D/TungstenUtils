@@ -1,0 +1,6 @@
+#ifndef TUNGSTEN_UTILS_NAME_OF_HPP
+#define TUNGSTEN_UTILS_NAME_OF_HPP
+
+#define W_NAME_OF(T) #T
+
+#endif

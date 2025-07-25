@@ -21,7 +21,7 @@ configure_file(
 # Add fmt
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/external/fmt)
 
-add_library(TungstenUtils
+add_library(TungstenUtils STATIC
     include/TungstenUtils/macros/ansi.hpp
     include/TungstenUtils/macros/noOp.hpp
     include/TungstenUtils/macros/debugBreak.hpp

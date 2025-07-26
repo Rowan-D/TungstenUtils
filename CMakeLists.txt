@@ -2,20 +2,28 @@ cmake_minimum_required(VERSION 3.14)
 
 file(READ "${CMAKE_CURRENT_SOURCE_DIR}/VERSION" TUNGSTENUTILS_VERSION_RAW)
 string(STRIP "${TUNGSTENUTILS_VERSION_RAW}" TUNGSTENUTILS_VERSION)
-string(REGEX MATCH "^([0-9]+)\\.([0-9]+)\\.([0-9]+)" _ "${TUNGSTENUTILS_VERSION}")
-set(TUNGSTENUTILS_VERSION_MAJOR ${CMAKE_MATCH_1})
-set(TUNGSTENUTILS_VERSION_MINOR ${CMAKE_MATCH_2})
-set(TUNGSTENUTILS_VERSION_PATCH ${CMAKE_MATCH_3})
+string(REPLACE "." ";" TUNGSTENUTILS_VERSION_LIST ${TUNGSTENUTILS_VERSION})
+
+list(LENGTH TUNGSTENUTILS_VERSION_LIST _ver_len)
+if(NOT _ver_len EQUAL 3)
+    message(FATAL_ERROR "VERSION file contains unknown format expected: MAJOR.MINOR.PATCH")
+endif()
+
+list(GET TUNGSTENUTILS_VERSION_LIST 0 TUNGSTENUTILS_VERSION_MAJOR)
+list(GET TUNGSTENUTILS_VERSION_LIST 1 TUNGSTENUTILS_VERSION_MINOR)
+list(GET TUNGSTENUTILS_VERSION_LIST 2 TUNGSTENUTILS_VERSION_PATCH)
 
 project(TungstenUtils VERSION ${TUNGSTENUTILS_VERSION} LANGUAGES CXX)
 
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_BUILD_RPATH_USE_ORIGIN TRUE)
 
 configure_file(
-  ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Version.hpp.in
-  ${CMAKE_CURRENT_BINARY_DIR}/include/TungstenUtils/Version.hpp
-  @ONLY
+    ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Version.hpp.in
+    ${CMAKE_CURRENT_BINARY_DIR}/include/TungstenUtils/Version.hpp
+    @ONLY
 )
 
 # Add fmt
@@ -106,12 +114,15 @@ install(FILES
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/TungstenUtils
 )
 
-# Uninstall logic
-configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/CMake/cmake_uninstall.cmake.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
-    IMMEDIATE @ONLY
-)
+# Uninstall logic. Only defined if this is the top-level project.
+if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
+    configure_file(
+        "${CMAKE_CURRENT_SOURCE_DIR}/CMake/cmake_uninstall.cmake.in"
+        "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
+        IMMEDIATE @ONLY
+    )
 
-add_custom_target(uninstall
-    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
+    add_custom_target(uninstall
+        COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake
+    )
+endif()

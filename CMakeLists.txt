@@ -60,6 +60,10 @@ target_precompile_headers(TungstenUtils PRIVATE src/wUtilsPCH.hpp)
 
 target_link_libraries(TungstenUtils PUBLIC fmt::fmt)
 
+set_target_properties(TungstenUtils PROPERTIES
+    VERSION ${PROJECT_VERSION}
+)
+
 include(FetchContent)
 FetchContent_Declare(
   Catch2

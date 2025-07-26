@@ -70,7 +70,6 @@ include(GNUInstallDirs)
 
 install(TARGETS TungstenUtils
         EXPORT TungstenUtilsTargets
-        EXPORT_NAME TungstenUtils
         INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -96,7 +95,7 @@ write_basic_package_version_file(
 )
 
 configure_package_config_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/TungstenUtilsConfig.cmake.in"
+    "${CMAKE_CURRENT_SOURCE_DIR}/CMake/TungstenUtilsConfig.cmake.in"
     "${CMAKE_CURRENT_BINARY_DIR}/TungstenUtilsConfig.cmake"
     INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/TungstenUtils
 )

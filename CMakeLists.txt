@@ -17,6 +17,8 @@ project(TungstenUtils VERSION ${TUNGSTENUTILS_VERSION} LANGUAGES CXX)
 
 message(STATUS "TungstenUtils version: ${PROJECT_VERSION}")
 
+option(TUNGSTENUTILS_INSTALL_LIBRARY "Install library, headers, and CMake config" OFF)
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_BUILD_RPATH_USE_ORIGIN TRUE)
@@ -28,6 +30,7 @@ configure_file(
 )
 
 # Add fmt
+set(FMT_INSTALL OFF)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/external/fmt)
 
 add_library(TungstenUtils STATIC
@@ -79,45 +82,47 @@ if (BUILD_TESTING)
 endif()
 
 # Installation logic
-include(GNUInstallDirs)
+if(TUNGSTENUTILS_ENABLE_INSTALL)
+    include(GNUInstallDirs)
 
-install(TARGETS TungstenUtils
-        EXPORT TungstenUtilsTargets
-        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+    install(TARGETS TungstenUtils
+            EXPORT TungstenUtilsTargets
+            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
-install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+    install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-install(FILES
-    "${CMAKE_CURRENT_BINARY_DIR}/include/TungstenUtils/Version.hpp"
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/TungstenUtils
-)
+    install(FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/include/TungstenUtils/Version.hpp"
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/TungstenUtils
+    )
 
-install(EXPORT TungstenUtilsTargets
-        FILE TungstenUtilsTargets.cmake
-        NAMESPACE Tungsten::
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/TungstenUtils)
+    install(EXPORT TungstenUtilsTargets
+            FILE TungstenUtilsTargets.cmake
+            NAMESPACE Tungsten::
+            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/TungstenUtils)
 
-include(CMakePackageConfigHelpers)
-write_basic_package_version_file(
-    "${CMAKE_CURRENT_BINARY_DIR}/TungstenUtilsConfigVersion.cmake"
-    VERSION ${TUNGSTENUTILS_VERSION}
-    COMPATIBILITY SameMajorVersion
-)
+    include(CMakePackageConfigHelpers)
+    write_basic_package_version_file(
+        "${CMAKE_CURRENT_BINARY_DIR}/TungstenUtilsConfigVersion.cmake"
+        VERSION ${TUNGSTENUTILS_VERSION}
+        COMPATIBILITY SameMajorVersion
+    )
 
-configure_package_config_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/CMake/TungstenUtilsConfig.cmake.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/TungstenUtilsConfig.cmake"
-    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/TungstenUtils
-)
+    configure_package_config_file(
+        "${CMAKE_CURRENT_SOURCE_DIR}/CMake/TungstenUtilsConfig.cmake.in"
+        "${CMAKE_CURRENT_BINARY_DIR}/TungstenUtilsConfig.cmake"
+        INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/TungstenUtils
+    )
 
-install(FILES
-    "${CMAKE_CURRENT_BINARY_DIR}/TungstenUtilsConfig.cmake"
-    "${CMAKE_CURRENT_BINARY_DIR}/TungstenUtilsConfigVersion.cmake"
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/TungstenUtils
-)
+    install(FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/TungstenUtilsConfig.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/TungstenUtilsConfigVersion.cmake"
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/TungstenUtils
+    )
+endif()
 
 # Uninstall logic. Only defined if this is the top-level project.
 if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)

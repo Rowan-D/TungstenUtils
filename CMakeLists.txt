@@ -32,7 +32,12 @@ configure_file(
 )
 
 # Add fmt
-add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/external/fmt EXCLUDE_FROM_ALL)
+if(TUNGSTENUTILS_INSTALL_LIBRARY)
+    set(FMT_INSTALL ON)
+else()
+    set(FMT_INSTALL OFF)
+endif()
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/external/fmt)
 
 add_library(TungstenUtils STATIC
     include/TungstenUtils/macros/ansi.hpp
@@ -99,9 +104,6 @@ if(TUNGSTENUTILS_INSTALL_LIBRARY)
         "${CMAKE_CURRENT_BINARY_DIR}/include/TungstenUtils/Version.hpp"
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/TungstenUtils
     )
-
-    install(DIRECTORY external/fmt/include/
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
     install(EXPORT TungstenUtilsTargets
             FILE TungstenUtilsTargets.cmake

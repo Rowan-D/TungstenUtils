@@ -18,8 +18,6 @@ project(TungstenUtils VERSION ${TUNGSTENUTILS_VERSION} LANGUAGES CXX)
 message(STATUS "TungstenUtils version: ${PROJECT_VERSION}")
 
 option(TUNGSTENUTILS_INSTALL_LIBRARY "Install library, headers, and CMake config" OFF)
-option(TUNGSTENUTILS_CLEAN_EMPTY_DIRS "Recursively clean up empty parent directories during uninstall" OFF)
-option(TUNGSTENUTILS_UNINSTALL_DRY_RUN "Show what would be removed, without removing anything" OFF)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

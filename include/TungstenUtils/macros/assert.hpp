@@ -8,7 +8,7 @@
     { \
         if (!(check)) \
         { \
-            W_LOG_CRITICAL_ERROR(__VA_ARGS__); \
+            W_DEBUG_LOG_CRITICAL_ERROR(__VA_ARGS__); \
             DEBUG_BREAK(); \
         } \
     } \

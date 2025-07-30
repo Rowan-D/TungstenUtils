@@ -5,7 +5,7 @@
 #include <filesystem>
 #include <optional>
 
-#include "TungstenLogger.hpp"
+#include <TungstenUtils/TungstenLogger.hpp>
 
 namespace wUtils
 {

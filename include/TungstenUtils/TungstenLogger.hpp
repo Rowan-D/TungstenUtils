@@ -2,8 +2,8 @@
 #define TUNGSTEN_UTILS_TUNGSTEN_LOGGER_HPP
 
 #include <iostream>
-#include "fmt/format.h"
-#include "macros/ansi.hpp"
+#include <fmt/format.h>
+#include <TungstenUtils/macros/ansi.hpp>
 
 #define W_GET_DEBUG_LOGGER() wUtils::TungstenLogger::GetDebugLogger()
 

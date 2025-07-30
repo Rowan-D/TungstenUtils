@@ -43,7 +43,9 @@ add_library(TungstenUtils STATIC
     include/TungstenUtils/macros/debugBreak.hpp
     include/TungstenUtils/macros/assert.hpp
     include/TungstenUtils/macros/nameof.hpp
+    include/TungstenUtils/macros.hpp
     include/TungstenUtils/TungstenUtils.hpp
+    include/TungstenUtils/Filesystem.hpp
     include/TungstenUtils/TungstenLogger.hpp
     include/TungstenUtils/SlotList.hpp
     include/TungstenUtils/ReadFile.hpp

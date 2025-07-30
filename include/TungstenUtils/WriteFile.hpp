@@ -4,7 +4,7 @@
 #include <string_view>
 #include <filesystem>
 
-#include "TungstenLogger.hpp"
+#include <TungstenUtils/TungstenLogger.hpp>
 
 namespace wUtils
 {

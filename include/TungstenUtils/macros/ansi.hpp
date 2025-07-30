@@ -1,5 +1,5 @@
-#ifndef TUNGSTEN_UTILS_ANSI_HPP
-#define TUNGSTEN_UTILS_ANSI_HPP
+#ifndef TUNGSTEN_UTILS_MACROS_ANSI_HPP
+#define TUNGSTEN_UTILS_MACROS_ANSI_HPP
 
 // ANSI Escape Codes for Text Formatting
 #define ANSI_RESET "\033[0m"

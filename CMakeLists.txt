@@ -46,6 +46,8 @@ add_library(TungstenUtils STATIC
     include/TungstenUtils/macros.hpp
     include/TungstenUtils/TungstenUtils.hpp
     include/TungstenUtils/Filesystem.hpp
+    include/TungstenUtils/wIndex.hpp
+    include/TungstenUtils/DebugGetTypeName.hpp
     include/TungstenUtils/TungstenLogger.hpp
     include/TungstenUtils/SlotList.hpp
     include/TungstenUtils/ReadFile.hpp

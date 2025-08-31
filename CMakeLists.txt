@@ -29,12 +29,45 @@ configure_file(
     @ONLY
 )
 
-if(NOT TARGET TungstenBuild)
+if(NOT TARGET Tungsten::BuildOptions)
     add_library(TungstenBuild INTERFACE)
     add_library(Tungsten::BuildOptions ALIAS TungstenBuild)
+
+    target_compile_options(TungstenBuild INTERFACE
+        $<$<CXX_COMPILER_ID:MSVC>:
+            $<$<CONFIG:Debug>:/Od;/Z7>
+            $<$<CONFIG:Release>:/O2;/DNDEBUG>
+            $<$<CONFIG:Dist>:/O2;/Oi;/Ot;/GL;/DNDEBUG>>
+        $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:
+            $<$<CONFIG:Debug>:-O0;-g>
+            $<$<CONFIG:Release>:-O3;-DNDEBUG>
+            $<$<CONFIG:Dist>:-O3;-DNDEBUG>>
+    )
+    target_link_options(TungstenBuild INTERFACE
+        $<$<CXX_COMPILER_ID:MSVC>:$<$<CONFIG:Dist>:/LTCG>>
+        $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:$<$<CONFIG:Dist>:-flto>>
+    )
+
+    option(W_ASSERTS "Enable asserts" ON)
+    set(W_PROFILER "Disabled" CACHE STRING "Disabled|Profile|DeepProfile")
+    set_property(CACHE W_PROFILER PROPERTY STRINGS Disabled Profile DeepProfile)
+
+    set(_W_PROF_DEFS "")
+    if(W_PROFILER STREQUAL "Profile")
+        set(_W_PROF_DEFS W_PROFILER)
+    elseif(W_PROFILER STREQUAL "DeepProfile")
+        set(_W_PROF_DEFS W_PROFILER;W_DEEP_PROFILE)
+    endif()
+
+    target_compile_definitions(TungstenBuild INTERFACE
+        $<$<CONFIG:Debug>:W_DEBUG>
+        $<$<CONFIG:Release>:W_RELEASE;W_NDEBUG>
+        $<$<CONFIG:Dist>:W_DIST;W_NDEBUG>
+        $<$<CONFIG:Dist>:W_ASSERTS=0>
+        $<$<NOT:$<CONFIG:Dist>>:$<$<BOOL:${W_ASSERTS}>:W_ASSERTS=1>>
+        ${_W_PROF_DEFS}
+    )
 endif()
-
-
 
 # Add fmt
 if(TUNGSTENUTILS_INSTALL_LIBRARY)
@@ -81,9 +114,12 @@ target_include_directories(TungstenUtils PUBLIC
 )
 
 target_compile_features(TungstenUtils PUBLIC cxx_std_20)
-target_precompile_headers(TungstenUtils PRIVATE src/wUtilsPCH.hpp)
+
+target_link_libraries(TungstenUtils PUBLIC Tungsten::BuildOptions)
 
 target_link_libraries(TungstenUtils PUBLIC fmt::fmt)
+
+target_precompile_headers(TungstenUtils PRIVATE src/wUtilsPCH.hpp)
 
 set_target_properties(TungstenUtils PROPERTIES
     VERSION ${PROJECT_VERSION}

@@ -29,6 +29,13 @@ configure_file(
     @ONLY
 )
 
+if(NOT TARGET TungstenBuild)
+    add_library(TungstenBuild INTERFACE)
+    add_library(Tungsten::BuildOptions ALIAS TungstenBuild)
+endif()
+
+
+
 # Add fmt
 if(TUNGSTENUTILS_INSTALL_LIBRARY)
     set(FMT_INSTALL ON)
@@ -38,11 +45,17 @@ endif()
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/external/fmt)
 
 add_library(TungstenUtils STATIC
+    include/TungstenUtils/compiler/attributes.hpp
+    include/TungstenUtils/compiler/debugBreak.hpp
+    include/TungstenUtils/platform/exceptionsConfig.hpp
+    include/TungstenUtils/platform/FallbackLogger.hpp
+    include/TungstenUtils/platform/windowsMinimal.hpp
     include/TungstenUtils/macros/ansi.hpp
     include/TungstenUtils/macros/noOp.hpp
-    include/TungstenUtils/macros/debugBreak.hpp
     include/TungstenUtils/macros/assert.hpp
     include/TungstenUtils/macros/nameof.hpp
+    include/TungstenUtils/compiler.hpp
+    include/TungstenUtils/platform.hpp
     include/TungstenUtils/macros.hpp
     include/TungstenUtils/TungstenUtils.hpp
     include/TungstenUtils/Filesystem.hpp
@@ -53,11 +66,12 @@ add_library(TungstenUtils STATIC
     include/TungstenUtils/ReadFile.hpp
     include/TungstenUtils/WriteFile.hpp
     include/TungstenUtils/FindAndReplace.hpp
-    src/wUtilsPCH.cpp
+    src/platform/FallbackLogger.cpp
     src/TungstenLogger.cpp
     src/ReadFile.cpp
     src/WriteFile.cpp
     src/FindAndReplace.cpp
+    src/wUtilsPCH.cpp
 )
 
 target_include_directories(TungstenUtils PUBLIC

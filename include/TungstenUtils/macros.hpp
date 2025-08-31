@@ -3,7 +3,6 @@
 
 #include <TungstenUtils/macros/ansi.hpp>
 #include <TungstenUtils/macros/assert.hpp>
-#include <TungstenUtils/macros/debugBreak.hpp>
 #include <TungstenUtils/macros/nameof.hpp>
 #include <TungstenUtils/macros/noOp.hpp>
 

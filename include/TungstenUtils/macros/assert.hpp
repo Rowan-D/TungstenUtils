@@ -1,14 +1,15 @@
 #ifndef TUNGSTEN_UTILS_MACROS_ASSERT_HPP
 #define TUNGSTEN_UTILS_MACROS_ASSERT_HPP
 
-#include "debugBreak.hpp"
+#include <TungstenUtils/compiler/debugBreak.hpp>
+#include <TungstenUtils/compiler/attributes.hpp>
 
 #define W_ASSERT(check, ...) \
     do \
     { \
-        if (!(check)) \
+        W_IF_UNLIKELY(!(check)) \
         { \
-            W_DEBUG_LOG_CRITICAL_ERROR(__VA_ARGS__); \
+            try { W_DEBUG_LOG_CRITICAL_ERROR(__VA_ARGS__); } catch (...) {} \
             DEBUG_BREAK(); \
         } \
     } \

@@ -1,5 +1,6 @@
 #include "wUtilsPCH.hpp"
 #include "TungstenUtils/platform/FallbackLogger.hpp"
+#include "TungstenUtils/compiler/debugBreak.hpp"
 
 namespace wUtils::platform
 {
@@ -8,9 +9,31 @@ namespace wUtils::platform
     {
         if (message)
         {
+            bool wrote_any = false;
+
 #if defined(_WIN32)
             OutputDebugStringA(message);
             OutputDebugStringA("\n");
+
+            DWORD written = 0;
+            const HANDLE err = GetStdHandle(STD_ERROR_HANDLE);
+            if (err && err != INVALID_HANDLE_VALUE)
+            {
+                const size_t len = std::strlen(message);
+                // Write the message
+                if (len)
+                {
+                    if (WriteFile(err, message, static_cast<DWORD>(len), &written, nullptr))
+                    {
+                        wrote_any = wrote_any || (written > 0);
+                    }
+                }
+                // Write newline
+                if (WriteFile(err, "\n", 1, &written, nullptr))
+                {
+                    wrote_any = true;
+                }
+            }
 #else
             iovec vec[2];
             vec[0].iov_base = const_cast<char*>(message);
@@ -27,6 +50,7 @@ namespace wUtils::platform
                 const ssize_t k = ::writev(STDERR_FILENO, v, n);
                 if (k > 0)
                 {
+                    wrote_any = true;
                     ssize_t remain = k;
                     while (n > 0 && remain > 0)
                     {
@@ -48,9 +72,15 @@ namespace wUtils::platform
                 {
                     continue;  // interrupted by signal → retry
                 }
-                break;  // other errors (EAGAIN/EPIPE/etc.): give up (fallback stays noexcept)
+                // other errors (EAGAIN/EPIPE/etc.)
+                DEBUG_BREAK();
+                break;
             }
 #endif
+            if (!wrote_any)
+            {
+                DEBUG_BREAK();
+            }
         }
     }
 }

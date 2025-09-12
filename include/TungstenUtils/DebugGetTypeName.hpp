@@ -22,18 +22,18 @@
 #elif defined(_MSC_VER)
     #include <typeinfo>
 
-    template<typename T>
     namespace wUtils
     {
+        template<typename T>
         std::string DebugGetTypeName()
         {
             return typeid(T).name();  // Usually demangled on MSVC already
         }
     }
 #else
-    template<typename T>
     namespace wUtils
     {
+        template<typename T>
         std::string DebugGetTypeName()
         {
             return "<DebugGetTypeName Unknown Compiler>";

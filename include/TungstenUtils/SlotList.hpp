@@ -31,15 +31,15 @@ namespace wUtils
         {
         }
 
-        void Reserve(wIndex count)
+        void Reserve(wIndex minCapacity)
         {
-            m_data.reserve(count);
-            m_exists.reserve(count);
+            m_data.reserve(minCapacity);
+            m_exists.reserve(minCapacity);
         }
 
-        inline void ReserveFreeList(wIndex count) { m_freeList.reserve(count); }
+        inline void ReserveFreeList(wIndex minCapacity) { m_freeList.reserve(minCapacity); }
 
-        wIndex Add(const T& value)
+        [[nodiscard]] wIndex Add(const T& value)
         {
             if (m_freeList.empty())
             {
@@ -134,7 +134,7 @@ namespace wUtils
                 const wIndex index = m_freeList.back();
                 m_freeList.pop_back();
                 m_data[index - 1] = value;
-                m_data[index - 1].setExists();
+                m_data[index - 1].SetExists();
                 return index;
             }
         }

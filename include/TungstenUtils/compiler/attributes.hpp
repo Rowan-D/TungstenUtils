@@ -1,17 +1,6 @@
 #ifndef TUNGSTEN_UTILS_COMPILER_ATTRIBUTES_HPP
 #define TUNGSTEN_UTILS_COMPILER_ATTRIBUTES_HPP
 
-// W_NODISCARD
-#if defined(__has_cpp_attribute)
-    #if __has_cpp_attribute(nodiscard) >= 201603
-        #define W_NODISCARD [[nodiscard]]
-    #else
-        #define W_NODISCARD
-    #endif
-#else
-    #define W_NODISCARD
-#endif
-
 // W_LIKELY W_UNLIKELY
 #if defined(__has_cpp_attribute)
     #if __has_cpp_attribute(likely) >= 201803

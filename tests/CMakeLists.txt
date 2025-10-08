@@ -1,5 +1,6 @@
 # Add test executable
 add_executable(TungstenUtilsTests
+    TestNumeric.cpp
     TestSlotList.cpp
     TestReadFile.cpp
     TestWriteFile.cpp

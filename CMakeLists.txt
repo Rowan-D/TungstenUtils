@@ -93,8 +93,15 @@ add_library(TungstenUtils STATIC
     include/TungstenUtils/TungstenUtils.hpp
     include/TungstenUtils/Filesystem.hpp
     include/TungstenUtils/wIndex.hpp
+    include/TungstenUtils/alignment.hpp
     include/TungstenUtils/DebugGetTypeName.hpp
+    include/TungstenUtils/numeric.hpp
     include/TungstenUtils/TungstenLogger.hpp
+    include/TungstenUtils/RelocatableListHeader.hpp
+    include/TungstenUtils/RelocatableList.hpp
+    include/TungstenUtils/RelocatableFreeListHeader.hpp
+    include/TungstenUtils/RelocatableFreeList.hpp
+    include/TungstenUtils/FreeList.hpp
     include/TungstenUtils/SlotList.hpp
     include/TungstenUtils/ReadFile.hpp
     include/TungstenUtils/WriteFile.hpp

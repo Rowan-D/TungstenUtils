@@ -1,9 +1,11 @@
 #ifndef TUNGSTEN_UTILS_MACROS_ASSERT_HPP
 #define TUNGSTEN_UTILS_MACROS_ASSERT_HPP
 
+#include <TungstenUtils/macros/noOp.hpp>
 #include <TungstenUtils/compiler/debugBreak.hpp>
 #include <TungstenUtils/compiler/attributes.hpp>
 
+#ifdef W_ASSERTS
 #define W_ASSERT(check, ...) \
     do \
     { \
@@ -14,5 +16,8 @@
         } \
     } \
     while (false)
+#else
+    #define W_ASSERT(check, ...) W_NO_OP()
+#endif
 
 #endif

@@ -16,6 +16,17 @@ namespace wUtils
         return a;
     }
 
+    template<typename T>
+    [[nodiscard]] constexpr T Max(T a, T b) noexcept
+        requires std::is_scalar_v<T>
+    {
+        if (b > a)
+        {
+            return b;
+        }
+        return a;
+    }
+
     template<std::integral T>
     [[nodiscard]] constexpr T IntDivCeil(T numerator, T denominator) noexcept
     {

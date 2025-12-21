@@ -30,10 +30,10 @@ configure_file(
 )
 
 if(NOT TARGET Tungsten::BuildOptions)
-    add_library(TungstenBuild INTERFACE)
-    add_library(Tungsten::BuildOptions ALIAS TungstenBuild)
+    add_library(TungstenBuildOptions INTERFACE)
+    add_library(Tungsten::BuildOptions ALIAS TungstenBuildOptions)
 
-    target_compile_options(TungstenBuild INTERFACE
+    target_compile_options(TungstenBuildOptions INTERFACE
         $<$<CXX_COMPILER_ID:MSVC>:
             $<$<CONFIG:Debug>:/Od;/Z7>
             $<$<CONFIG:Release>:/O2;/DNDEBUG>
@@ -43,7 +43,7 @@ if(NOT TARGET Tungsten::BuildOptions)
             $<$<CONFIG:Release>:-O3;-DNDEBUG>
             $<$<CONFIG:Dist>:-O3;-DNDEBUG>>
     )
-    target_link_options(TungstenBuild INTERFACE
+    target_link_options(TungstenBuildOptions INTERFACE
         $<$<CXX_COMPILER_ID:MSVC>:$<$<CONFIG:Dist>:/LTCG>>
         $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:$<$<CONFIG:Dist>:-flto>>
     )
@@ -59,7 +59,7 @@ if(NOT TARGET Tungsten::BuildOptions)
         set(_W_PROF_DEFS W_PROFILER;W_DEEP_PROFILE)
     endif()
 
-    target_compile_definitions(TungstenBuild INTERFACE
+    target_compile_definitions(TungstenBuildOptions INTERFACE
         $<$<CONFIG:Debug>:W_DEBUG>
         $<$<CONFIG:Release>:W_RELEASE;W_NDEBUG>
         $<$<CONFIG:Dist>:W_DIST;W_NDEBUG>
@@ -81,6 +81,7 @@ add_library(TungstenUtils STATIC
     include/TungstenUtils/compiler/attributes.hpp
     include/TungstenUtils/compiler/debugBreak.hpp
     include/TungstenUtils/platform/exceptionsConfig.hpp
+    include/TungstenUtils/platform/ExecutablePath.hpp
     include/TungstenUtils/platform/FallbackLogger.hpp
     include/TungstenUtils/platform/windowsMinimal.hpp
     include/TungstenUtils/macros/ansi.hpp
@@ -106,6 +107,7 @@ add_library(TungstenUtils STATIC
     include/TungstenUtils/ReadFile.hpp
     include/TungstenUtils/WriteFile.hpp
     include/TungstenUtils/FindAndReplace.hpp
+    src/platform/ExecutablePath.cpp
     src/platform/FallbackLogger.cpp
     src/TungstenLogger.cpp
     src/ReadFile.cpp

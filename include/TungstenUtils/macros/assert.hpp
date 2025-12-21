@@ -12,7 +12,7 @@
         W_IF_UNLIKELY(!(check)) \
         { \
             try { W_DEBUG_LOG_CRITICAL_ERROR(__VA_ARGS__); } catch (...) {} \
-            DEBUG_BREAK(); \
+            W_DEBUG_BREAK(); \
         } \
     } \
     while (false)

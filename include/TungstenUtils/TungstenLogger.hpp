@@ -14,7 +14,7 @@
 #define W_LOG_CRITICAL_ERROR(logger, ...) logger.LogCritical(__VA_ARGS__)
 
 #define W_LOG_INFO_NOEXCEPT(logger, ...) W_TRY_NOEXCEPT(W_LOG_INFO(logger, __VA_ARGS__))
-#define W_LOG_WARNING_NOEXCEPT(logger, ...)W_TRY_NOEXCEPT(W_LOG_WARNING(logger, __VA_ARGS__))
+#define W_LOG_WARNING_NOEXCEPT(logger, ...) W_TRY_NOEXCEPT(W_LOG_WARNING(logger, __VA_ARGS__))
 #define W_LOG_ERROR_NOEXCEPT(logger, ...) W_TRY_NOEXCEPT(W_LOG_ERROR(logger, __VA_ARGS__))
 #define W_LOG_CRITICAL_ERROR_NOEXCEPT(logger, ...) W_TRY_NOEXCEPT(W_LOG_INFO(logger, __VA_ARGS__))
 

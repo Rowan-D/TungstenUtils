@@ -73,13 +73,13 @@ namespace wUtils::platform
                     continue;  // interrupted by signal → retry
                 }
                 // other errors (EAGAIN/EPIPE/etc.)
-                DEBUG_BREAK();
+                W_DEBUG_BREAK();
                 break;
             }
 #endif
             if (!wrote_any)
             {
-                DEBUG_BREAK();
+                W_DEBUG_BREAK();
             }
         }
     }

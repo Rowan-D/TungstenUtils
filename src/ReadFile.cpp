@@ -32,9 +32,4 @@ namespace wUtils
 
         return content;
     }
-
-    std::optional<std::string> ReadFile(const std::filesystem::path& path)
-    {
-        return ReadFile(path, W_GET_DEBUG_LOGGER());
-    }
 }

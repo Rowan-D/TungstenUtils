@@ -7,9 +7,13 @@
 #if defined(_WIN32)
     #include "TungstenUtils/platform/windowsMinimal.hpp" // wraps <windows.h>
 #else
+    #if defined(__APPLE__)
+        #include <mach-o/dyld.h>
+    #endif
     #include <sys/uio.h>
     #include <unistd.h>
     #include <errno.h>
+    #include <limits.h>
 #endif
 
 #include <fstream>

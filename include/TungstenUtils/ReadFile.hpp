@@ -9,8 +9,8 @@
 
 namespace wUtils
 {
-    std::optional<std::string> ReadFile(const std::filesystem::path& path, TungstenLogger& errorList);
-    std::optional<std::string> ReadFile(const std::filesystem::path& path);
+    [[nodiscard]] std::optional<std::string> ReadFile(const std::filesystem::path& path, TungstenLogger& errorList);
+    [[nodiscard]] inline std::optional<std::string> ReadFile(const std::filesystem::path& path) { return ReadFile(path, W_GET_DEBUG_LOGGER()); }
 }
 
 #endif

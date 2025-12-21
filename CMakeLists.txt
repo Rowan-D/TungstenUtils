@@ -77,6 +77,9 @@ else()
 endif()
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/external/fmt)
 
+# Add glm
+add_subdirectory(external/glm EXCLUDE_FROM_ALL)
+
 add_library(TungstenUtils STATIC
     include/TungstenUtils/compiler/attributes.hpp
     include/TungstenUtils/compiler/debugBreak.hpp
@@ -130,6 +133,8 @@ target_compile_features(TungstenUtils PUBLIC cxx_std_20)
 target_link_libraries(TungstenUtils PUBLIC Tungsten::BuildOptions)
 
 target_link_libraries(TungstenUtils PUBLIC fmt::fmt)
+
+target_link_libraries(TungstenUtils PUBLIC glm::glm)
 
 target_precompile_headers(TungstenUtils PRIVATE src/wUtilsPCH.hpp)
 

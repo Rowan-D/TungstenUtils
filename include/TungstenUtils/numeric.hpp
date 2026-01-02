@@ -1,13 +1,13 @@
 #ifndef TUNGSTEN_UTILS_NUMERIC_HPP
 #define TUNGSTEN_UTILS_NUMERIC_HPP
 
-#include <type_traits>
+#include <concepts>
 
 namespace wUtils
 {
     template<typename T>
+    requires std::totally_ordered<T>
     [[nodiscard]] constexpr T Min(T a, T b) noexcept
-        requires std::is_scalar_v<T>
     {
         if (b < a)
         {
@@ -17,8 +17,8 @@ namespace wUtils
     }
 
     template<typename T>
+    requires std::totally_ordered<T>
     [[nodiscard]] constexpr T Max(T a, T b) noexcept
-        requires std::is_scalar_v<T>
     {
         if (b > a)
         {

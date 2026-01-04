@@ -8,6 +8,7 @@
 #include <TungstenUtils/alignment.hpp>
 #include <TungstenUtils/DebugGetTypeName.hpp>
 #include <TungstenUtils/numeric.hpp>
+#include <TungstenUtils/parse.hpp>
 #include <TungstenUtils/TungstenLogger.hpp>
 #include <TungstenUtils/SlotList.hpp>
 #include <TungstenUtils/RelocatableListHeader.hpp>

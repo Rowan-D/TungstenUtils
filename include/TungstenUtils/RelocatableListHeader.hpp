@@ -174,7 +174,8 @@ namespace wUtils
                 T tmp(value);
                 Reallocate(CalculateNextCapacity(m_capacity));
                 std::construct_at(m_data + m_count, std::move(tmp));
-            } else
+            }
+            else
             {
                 std::construct_at(m_data + m_count, value);
             }

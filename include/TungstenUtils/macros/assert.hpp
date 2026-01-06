@@ -4,6 +4,7 @@
 #include <TungstenUtils/macros/noOp.hpp>
 #include <TungstenUtils/compiler/debugBreak.hpp>
 #include <TungstenUtils/compiler/attributes.hpp>
+#include <TungstenUtils/TungstenLogger.hpp>
 
 #ifdef W_ASSERTS
 #define W_ASSERT(check, ...) \

@@ -14,7 +14,7 @@ namespace wUtils
     }
 
     template<typename... Ts>
-    inline constexpr std::size_t MaxAlignOf = std::max({ alignof(std::remove_cvref_t<Ts>)... });
+    inline constexpr std::size_t maxAlignOf_v = std::max({ alignof(std::remove_cvref_t<Ts>)... });
 }
 
 #endif

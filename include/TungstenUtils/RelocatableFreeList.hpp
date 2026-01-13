@@ -7,19 +7,19 @@
 
 namespace wUtils
 {
-    template<std::integral T>
+    template<std::integral IndexT>
     class RelocatableFreeList
     {
     public:
         RelocatableFreeList() = default;
 
         inline void Reserve(wIndex minCapacity) noexcept(noexcept(m_free.Reserve(minCapacity))) { m_free.Reserve(minCapacity); }
-        inline void Add(T index) noexcept(noexcept(m_free.Emplace(index))) { m_free.Emplace(index); }
+        inline void Add(IndexT index) noexcept(noexcept(m_free.Emplace(index))) { m_free.Emplace(index); }
 
-        [[nodiscard]] T Remove() noexcept
+        [[nodiscard]] IndexT Remove() noexcept
         {
             W_ASSERT(!m_free.Empty(), "RelocatableFreeList<T> must not be empty when Remove is called");
-            T idx = m_free.Back();
+            IndexT idx = m_free.Back();
             m_free.PopBack();
             return idx;
         }
@@ -29,7 +29,7 @@ namespace wUtils
         inline void Clear() noexcept { m_free.Clear(); }
 
     private:
-        RelocatableList<T> m_free;
+        RelocatableList<IndexT> m_free;
     };
 }
 

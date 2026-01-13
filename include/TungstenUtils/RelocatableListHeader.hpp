@@ -278,9 +278,9 @@ namespace wUtils
 
         [[nodiscard]] inline bool Empty() const noexcept { return !m_count; }
 
-        T* m_data;
-        wIndex m_count;
-        wIndex m_capacity;
+        T* m_data{};
+        wIndex m_count{};
+        wIndex m_capacity{};
     };
 }
 

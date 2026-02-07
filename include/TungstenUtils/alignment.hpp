@@ -2,7 +2,6 @@
 #define TUNGSTEN_UTILS_ALIGNMENT_HPP
 
 #include <cstddef>
-#include <cstdint>
 #include <algorithm>
 #include <type_traits>
 
